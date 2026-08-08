@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ff7a3d" />
+  <meta name="description" content="A playful athlete-themed 20-question kindergarten weekly review." />
+  <title>Little GP Champions Weekly Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bubble-field" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  <main class="app-shell">
+    <header class="brand">
+      <a href="#welcome" id="home-logo" class="logo" aria-label="Return to the Little GP Champions opening page">
+        <span class="logo-mark">🏅</span>
+        <span><strong>Little GP Champions</strong><small>Weekly Test</small></span>
+      </a>
+      <img class="school-logo" src="assets/images/gip-eis-logo.png" alt="GIP EIS school logo" />
+      <div class="week-pill">👟 Week 1</div>
+    </header>
+
+    <section id="welcome" class="screen welcome-screen active" aria-labelledby="welcome-title">
+      <div class="hero-copy">
+        <div class="eyebrow">🏆 Ready, GP Athlete?</div>
+        <h1 id="welcome-title">Warm up those<br /><em>super-smart muscles!</em></h1>
+        <p>Run, jump, think, and show your GP friends what you learned this week.</p>
+        <label class="name-label" for="student-name">What’s your name?</label>
+        <div class="name-row">
+          <input id="student-name" maxlength="20" autocomplete="given-name" placeholder="Type your name..." />
+          <button id="start-btn" class="primary-btn" type="button">Start the test <span>→</span></button>
+        </div>
+        <div class="lesson-chips" aria-label="Test sections">
+          <span class="pink">Aa <b>Phonics</b></span><span class="yellow">💬 <b>Sentences</b></span>
+          <span class="blue">📖 <b>Reading</b></span><span class="green">123 <b>Math</b></span>
+        </div>
+      </div>
+      <div class="grooming-scene level-a-scene" aria-label="Boy G and Girl P welcome Level A learners">
+        <div class="level-badge"><span>⭐</span><b>LEVEL A</b><small>GP Friends</small></div>
+        <img class="cycling-friends-hero" src="assets/images/gp-friends-cycling.png" alt="Boy G and Girl P riding bicycles together toward the finish line" />
+        <div class="welcome-podium"><span>READY • SET • LEARN!</span></div>
+        <div class="scene-tag">20 quick challenges<br /><b>one GP champion finish!</b></div>
+      </div>
+    </section>
+
+    <section id="quiz" class="screen quiz-screen" aria-labelledby="question-text">
+      <div class="quiz-top">
+        <button id="quit-btn" class="icon-btn" type="button" aria-label="Return to start">⌂</button>
+        <div class="progress-wrap">
+          <div class="progress-label"><span id="section-label">Phonics</span><b id="progress-label">1 of 20</b></div>
+          <div class="progress-track"><div id="progress-bar"></div></div>
+        </div>
+        <div id="question-paw" class="paw-count">🏅 <span>1</span></div>
+      </div>
+      <article class="question-card">
+        <div id="mascot" class="mini-mascot" aria-hidden="true">🏀</div>
+        <div id="question-tag" class="question-tag">SOUND CHECK</div>
+        <h2 id="question-text"></h2>
+        <p id="question-hint" class="question-hint"></p>
+        <div id="question-visual" class="question-visual" aria-hidden="true" hidden></div>
+        <img id="question-image" class="question-image" alt="" hidden />
+        <button id="question-listen-btn" class="choice-listen question-listen" type="button" aria-label="Listen to the question again"><span aria-hidden="true">🔊</span> Hear the question</button>
+        <div id="choices" class="choices"></div>
+        <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+        <button id="next-btn" class="primary-btn next-btn" type="button">Next question <span>→</span></button>
+      </article>
+      <p class="helper-text">Choose the answer that feels right. You’ve got this! 🌟</p>
+    </section>
+
+    <section id="results" class="screen results-screen" aria-labelledby="results-title">
+      <div class="celebration" aria-hidden="true">✦ 🎉 ✦</div>
+      <div class="results-heading">
+        <div class="medal">🏅</div>
+        <div><div class="eyebrow">You crossed the finish line!</div><h1 id="results-title">Amazing work!</h1><p id="student-report-name" class="student-report-name"></p><p id="results-message"></p></div>
+      </div>
+      <div class="results-layout">
+        <button id="dressup-card" class="dressup-card" type="button" aria-haspopup="dialog">
+          <span class="dressup-badge">NEW REWARD</span>
+          <span class="dressup-title">Athlete Dress-Up</span>
+          <img class="dressup-gift" src="assets/images/kids-3d-present-box.png" alt="A colorful present box containing the athlete dress-up reward" />
+          <span class="dressup-prompt">Tap to open the locker →</span>
+        </button>
+        <div class="report-main">
+          <div class="results-grid">
+            <article class="score-card">
+              <div class="score-ring"><span id="score-number">0</span><small>/ 20</small></div>
+              <h2 id="score-title">Champion!</h2><p id="score-note"></p>
+            </article>
+            <article class="chart-card">
+              <div class="card-title"><div><span class="mini-label">YOUR GP RESULTS</span><h2>Skills at a glance</h2></div><span id="percent-badge">0%</span></div>
+              <div id="skill-chart" class="skill-chart"></div>
+            </article>
+          </div>
+          <article class="analysis-card">
+            <div class="analysis-icon">📣</div><div><span class="mini-label">GP FRIEND’S NOTE</span><h2>Your next training step</h2><p id="analysis-text"></p></div>
+          </article>
+        </div>
+      </div>
+      <details class="review-card">
+        <summary>See all my answers <span>⌄</span></summary>
+        <div id="answer-review" class="answer-review"></div>
+      </details>
+      <div class="result-actions"><button id="restart-btn" class="secondary-btn" type="button">↻ Try again</button><button id="capture-btn" class="camera-btn" type="button">📸 Capture report</button><button id="print-btn" class="primary-btn" type="button">Print my report 🖨️</button></div>
+    </section>
+  </main>
+  <footer>Made with teamwork, courage & champion energy 🏅</footer>
+  <div id="capture-modal" class="capture-modal" role="dialog" aria-modal="true" aria-labelledby="capture-title" hidden>
+    <div class="capture-dialog">
+      <button id="capture-close" class="capture-close" type="button" aria-label="Close report preview">×</button>
+      <div class="eyebrow">Your report picture</div>
+      <h2 id="capture-title">Ready to save or share!</h2>
+      <div class="capture-preview"><img id="capture-image" alt="Preview of the captured weekly test report" /></div>
+      <p id="share-note" class="share-note">Download it to this device or share it using an available app.</p>
+      <div class="capture-actions"><button id="download-capture" class="secondary-btn" type="button">⬇ Download</button><button id="share-capture" class="primary-btn" type="button">Share report ↗</button></div>
+    </div>
+  </div>
+  <div id="dressup-modal" class="dressup-modal" role="dialog" aria-modal="true" aria-labelledby="dressup-title" hidden>
+    <div class="dressup-dialog">
+      <button id="dressup-close" class="capture-close" type="button" aria-label="Close dress-up activity">×</button>
+      <div class="dressup-modal-heading"><div><div class="eyebrow">Your score reward</div><h2 id="dressup-title">Champion Dress-Up!</h2><p id="dressup-unlock-message"></p></div><button id="dressup-reset" class="secondary-btn dressup-reset" type="button">↻ Start over</button></div>
+      <div class="dressup-game">
+        <div id="character-dropzone" class="character-dropzone" tabindex="0" aria-label="Drop unlocked clothes and accessories on the character">
+          <span class="drop-hint">Drag or tap an item to dress the athlete</span>
+          <div class="character-stage">
+            <img id="dressup-character" src="assets/dressup/boy-g.png" alt="The athlete ready to be dressed" />
+            <video id="dressup-celebration-video" class="dressup-video" playsinline preload="metadata" aria-label="Dress-up celebration animation" hidden></video>
+          </div>
+          <div id="dressup-status" class="dressup-status" role="status" aria-live="polite">Start with the colorful hat!</div>
+          <button id="replay-clip" class="secondary-btn replay-clip" type="button" hidden>▶ Replay clip</button>
+        </div>
+        <div class="item-locker" aria-label="Dress-up items">
+          <h3>My Locker</h3>
+          <p>Unlocked items are ready to drag!</p>
+          <div class="dressup-items">
+            <button class="dressup-item" type="button" draggable="true" data-item="hat" data-order="0"><span class="lock-mark" aria-hidden="true">🔒</span><img src="assets/dressup/boy-g-element-hat.png" alt="Colorful hat" /><b>Hat</b></button>
+            <button class="dressup-item" type="button" draggable="true" data-item="sunglasses" data-order="1"><span class="lock-mark" aria-hidden="true">🔒</span><img src="assets/dressup/boy-g-element-sunglasses.png" alt="Blue star sunglasses" /><b>Sunglasses</b></button>
+            <button class="dressup-item" type="button" draggable="true" data-item="clothes" data-order="2"><span class="lock-mark" aria-hidden="true">🔒</span><img src="assets/dressup/boy-g-element-clothes.png" alt="Colorful sports outfit" /><b>Clothes</b></button>
+            <button class="dressup-item" type="button" draggable="true" data-item="trophy" data-order="3"><span class="lock-mark" aria-hidden="true">🔒</span><img src="assets/dressup/boy-g-element-trophy.png" alt="Gold trophy" /><b>Trophy</b></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/vendor/html2canvas.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
