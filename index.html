@@ -25,13 +25,12 @@
 
     <section id="welcome" class="screen welcome-screen active" aria-labelledby="welcome-title">
       <div class="hero-copy">
-        <div class="eyebrow">🏆 Ready, GP Athlete?</div>
-        <h1 id="welcome-title">Warm up those<br /><em>super-smart muscles!</em></h1>
-        <p>Run, jump, think, and show your GP friends what you learned this week.</p>
-        <label class="name-label" for="student-name">What’s your name?</label>
+        <h1 id="welcome-title">Ready for Your Weekly<br /><em>GP Challenge?</em></h1>
+        <p>Show your GP Friends what you learned this week!</p>
+        <label class="name-label" for="student-name">Your name</label>
         <div class="name-row">
           <input id="student-name" maxlength="20" autocomplete="given-name" placeholder="Type your name..." />
-          <button id="start-btn" class="primary-btn" type="button">Start the test <span>→</span></button>
+          <button id="start-btn" class="primary-btn" type="button">Let’s Go! <span>→</span></button>
         </div>
         <div class="lesson-chips" aria-label="Test sections">
           <span class="pink">Aa <b>Phonics</b></span><span class="yellow">💬 <b>Sentences</b></span>
@@ -41,8 +40,7 @@
       <div class="grooming-scene level-a-scene" aria-label="Boy G and Girl P welcome Level A learners">
         <div class="level-badge"><span>⭐</span><b>LEVEL A</b><small>GP Friends</small></div>
         <img class="cycling-friends-hero" src="assets/images/gp-friends-cycling.png" alt="Boy G and Girl P riding bicycles together toward the finish line" />
-        <div class="welcome-podium"><span>READY • SET • LEARN!</span></div>
-        <div class="scene-tag">20 quick challenges<br /><b>one GP champion finish!</b></div>
+        <div class="scene-sparkles" aria-hidden="true"><span>⭐</span><span>⚽</span><span>✦</span><span>🎾</span></div>
       </div>
     </section>
 
@@ -65,6 +63,10 @@
         <button id="question-listen-btn" class="choice-listen question-listen" type="button" aria-label="Listen to the question again"><span aria-hidden="true">🔊</span> Hear the question</button>
         <div id="choices" class="choices"></div>
         <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+        <div id="practice-popup" class="practice-popup" role="status" aria-live="polite" hidden>
+          <div><small>LISTEN &amp; REPEAT!</small><strong id="practice-text"></strong></div>
+          <button id="practice-replay" class="practice-speaker" type="button" aria-label="Listen to the practice sentence again" title="Listen again">🔊</button>
+        </div>
         <button id="next-btn" class="primary-btn next-btn" type="button">Next question <span>→</span></button>
       </article>
       <p class="helper-text">Choose the answer that feels right. You’ve got this! 🌟</p>

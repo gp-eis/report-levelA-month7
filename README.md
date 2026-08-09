@@ -1,6 +1,6 @@
-# Report_A_M6_W1
+# Report_A_M7_W1
 
-Little GP Champions Level A, Month 6, Week 1 report project: a playful, athlete-themed, mobile-friendly 20-question kindergarten quiz with four sections—Phonics, Literacy Key Sentences, Reading, and Math.
+Little GP Champions Level A, Month 7, Week 1 report project: a playful, athlete-themed, mobile-friendly 20-question kindergarten quiz with four sections—Phonics, Literacy Key Sentences, Reading, and Math.
 
 ## Use it
 
@@ -13,7 +13,7 @@ Open `script.js` and edit the `questions` list near the top. Keep five questions
 ## Publish with GitHub Pages later
 
 1. Create a new GitHub repository.
-2. Upload all four files in this folder.
+2. Upload all files in this folder.
 3. In the repository, open **Settings → Pages**.
 4. Choose **Deploy from a branch**, select `main` and `/ (root)`, then save.
 
