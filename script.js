@@ -1,18 +1,18 @@
 const questions = [
   {section:"Phonics",tag:"SOUND CHECK",icon:"🏀",q:"What is the sound of the letter M?",hint:"Listen to Sound 1 and Sound 2. Then choose your answer.",choices:["Phoneme M","Phoneme N"],audioChoices:["assets/audio/phonics/phoneme-m.mp3","assets/audio/phonics/phoneme-n.mp3"],practice:"The sound of M is",practiceDisplay:"The sound of M is /m/.",answer:0},
-  {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/milk.png",imageAlt:"A glass of milk",choices:["Milk","Meat"],practice:"The milk is here.",answer:0},
-  {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/mango.png",imageAlt:"A ripe mango",choices:["Mango","Milk"],practice:"The mango is here.",answer:0},
-  {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/meat.png",imageAlt:"A piece of meat",choices:["Meat","Mango"],practice:"The meat is here.",answer:0},
-  {section:"Phonics",tag:"SENTENCE CHECK",icon:"🏀",q:"Which is the correct sentence?",hint:"Look at the mango and choose the matching sentence.",image:"assets/questions/mango.png",imageAlt:"A ripe mango",choices:["The mango is here.","The milk is here."],practice:"The mango is here.",answer:0},
-  {section:"Sentences",tag:"KEY SENTENCE",icon:"🎾",q:"Choose the correct sentence.",hint:"Look at the sport in the picture.",image:"assets/questions/tennis.png",imageAlt:"A child playing tennis",imageWide:true,choices:["I play tennis.",""],distractors:["I play baseball.","I play golf.","I play many sports.","I play soccer."],answer:0},
-  {section:"Sentences",tag:"KEY SENTENCE",icon:"⚾",q:"Choose the correct sentence.",hint:"Look at the sport in the picture.",image:"assets/questions/baseball.png",imageAlt:"A child playing baseball",imageWide:true,choices:["I play baseball.",""],distractors:["I play tennis.","I play golf.","I play many sports.","I play soccer."],answer:0},
-  {section:"Sentences",tag:"KEY SENTENCE",icon:"⛳",q:"Choose the correct sentence.",hint:"Look at the sport in the picture.",image:"assets/questions/golf.png",imageAlt:"A child playing golf",imageWide:true,choices:["I play golf.",""],distractors:["I play tennis.","I play baseball.","I play many sports.","I play soccer."],answer:0},
-  {section:"Sentences",tag:"KEY SENTENCE",icon:"🏅",q:"Choose the correct sentence.",hint:"Look at all the sports in the picture.",image:"assets/questions/many-sports.png",imageAlt:"Equipment used to play many different sports",imageWide:true,choices:["I play many sports.",""],distractors:["I play tennis.","I play baseball.","I play golf.","I play soccer."],answer:0},
-  {section:"Sentences",tag:"KEY SENTENCE",icon:"⚽",q:"Choose the correct sentence.",hint:"Look at the sport in the picture.",image:"assets/questions/soccer.png",imageAlt:"A child playing soccer",imageWide:true,choices:["I play soccer.",""],distractors:["I play tennis.","I play baseball.","I play golf.","I play many sports."],answer:0},
-  {section:"Reading",tag:"RACE READING",icon:"🚴",q:"Look at the picture! What is the correct sentence?",hint:"Follow the arrow to the cyclist.",image:"assets/questions/cycling-first.png",imageAlt:"An arrow pointing to the cyclist in first place",imageWide:true,choices:["I am first.",""],distractors:["I am second.","I am third.","I am last."],answer:0},
-  {section:"Reading",tag:"RACE READING",icon:"🚴",q:"Look at the picture! What is the correct sentence?",hint:"Follow the arrow to the cyclist.",image:"assets/questions/cycling-second.png",imageAlt:"An arrow pointing to the cyclist in second place",imageWide:true,choices:["I am second.",""],distractors:["I am first.","I am third.","I am last."],answer:0},
-  {section:"Reading",tag:"RACE READING",icon:"🚴",q:"Look at the picture! What is the correct sentence?",hint:"Follow the arrow to the cyclist.",image:"assets/questions/cycling-third.png",imageAlt:"An arrow pointing to the cyclist in third place",imageWide:true,choices:["I am third.",""],distractors:["I am first.","I am second.","I am last."],answer:0},
-  {section:"Reading",tag:"RACE READING",icon:"🚴",q:"Look at the picture! What is the correct sentence?",hint:"Follow the arrow to the cyclist.",image:"assets/questions/cycling-last.png",imageAlt:"An arrow pointing to the cyclist in last place",imageWide:true,choices:["I am last.",""],distractors:["I am first.","I am second.","I am third."],answer:0},
+  {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/milk.webp",imageAlt:"A glass of milk",choices:["Milk","Meat"],practice:"The milk is here.",answer:0},
+  {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/mango.webp",imageAlt:"A ripe mango",choices:["Mango","Milk"],practice:"The mango is here.",answer:0},
+  {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/meat.webp",imageAlt:"A piece of meat",choices:["Meat","Mango"],practice:"The meat is here.",answer:0},
+  {section:"Phonics",tag:"SENTENCE CHECK",icon:"🏀",q:"Which is the correct sentence?",hint:"Look at the mango and choose the matching sentence.",image:"assets/questions/mango.webp",imageAlt:"A ripe mango",choices:["The mango is here.","The milk is here."],practice:"The mango is here.",answer:0},
+  {section:"Sentences",tag:"KEY SENTENCE",icon:"🎾",q:"Choose the correct sentence.",hint:"Look at the sport in the picture.",image:"assets/questions/tennis.webp",imageAlt:"A child playing tennis",imageWide:true,choices:["I play tennis.",""],distractors:["I play baseball.","I play golf.","I play many sports.","I play soccer."],answer:0},
+  {section:"Sentences",tag:"KEY SENTENCE",icon:"⚾",q:"Choose the correct sentence.",hint:"Look at the sport in the picture.",image:"assets/questions/baseball.webp",imageAlt:"A child playing baseball",imageWide:true,choices:["I play baseball.",""],distractors:["I play tennis.","I play golf.","I play many sports.","I play soccer."],answer:0},
+  {section:"Sentences",tag:"KEY SENTENCE",icon:"⛳",q:"Choose the correct sentence.",hint:"Look at the sport in the picture.",image:"assets/questions/golf.webp",imageAlt:"A child playing golf",imageWide:true,choices:["I play golf.",""],distractors:["I play tennis.","I play baseball.","I play many sports.","I play soccer."],answer:0},
+  {section:"Sentences",tag:"KEY SENTENCE",icon:"🏅",q:"Choose the correct sentence.",hint:"Look at all the sports in the picture.",image:"assets/questions/many-sports.webp",imageAlt:"Equipment used to play many different sports",imageWide:true,choices:["I play many sports.",""],distractors:["I play tennis.","I play baseball.","I play golf.","I play soccer."],answer:0},
+  {section:"Sentences",tag:"KEY SENTENCE",icon:"⚽",q:"Choose the correct sentence.",hint:"Look at the sport in the picture.",image:"assets/questions/soccer.webp",imageAlt:"A child playing soccer",imageWide:true,choices:["I play soccer.",""],distractors:["I play tennis.","I play baseball.","I play golf.","I play many sports."],answer:0},
+  {section:"Reading",tag:"RACE READING",icon:"🚴",q:"Look at the picture! What is the correct sentence?",hint:"Follow the arrow to the cyclist.",image:"assets/questions/cycling-first.webp",imageAlt:"An arrow pointing to the cyclist in first place",imageWide:true,choices:["I am first.",""],distractors:["I am second.","I am third.","I am last."],answer:0},
+  {section:"Reading",tag:"RACE READING",icon:"🚴",q:"Look at the picture! What is the correct sentence?",hint:"Follow the arrow to the cyclist.",image:"assets/questions/cycling-second.webp",imageAlt:"An arrow pointing to the cyclist in second place",imageWide:true,choices:["I am second.",""],distractors:["I am first.","I am third.","I am last."],answer:0},
+  {section:"Reading",tag:"RACE READING",icon:"🚴",q:"Look at the picture! What is the correct sentence?",hint:"Follow the arrow to the cyclist.",image:"assets/questions/cycling-third.webp",imageAlt:"An arrow pointing to the cyclist in third place",imageWide:true,choices:["I am third.",""],distractors:["I am first.","I am second.","I am last."],answer:0},
+  {section:"Reading",tag:"RACE READING",icon:"🚴",q:"Look at the picture! What is the correct sentence?",hint:"Follow the arrow to the cyclist.",image:"assets/questions/cycling-last.webp",imageAlt:"An arrow pointing to the cyclist in last place",imageWide:true,choices:["I am last.",""],distractors:["I am first.","I am second.","I am third."],answer:0},
   {section:"Reading",tag:"BEST RESPONSE",icon:"🏆",q:"Find the best response to the question: Did you do well?",hint:"Choose the answer that matches the question.",choices:["Yes, I won.","I play many sports."],practice:"Did you do well? Yes, I won.",answer:0},
   {section:"Math",tag:"BIGGER NUMBER",icon:"🔢",q:"Which number is bigger?",hint:"Look at both numbers and choose the greater number.",numberPair:[2,5],choices:["5","2"],practice:"5 is bigger than 2.",answer:0},
   {section:"Math",tag:"BIGGER NUMBER",icon:"🔢",q:"Which number is bigger?",hint:"Look at both numbers and choose the greater number.",numberPair:[3,1],choices:["3","1"],practice:"3 is bigger than 1.",answer:0},
@@ -23,14 +23,14 @@ const questions = [
 
 const colors={Phonics:"#ff7043",Sentences:"#ffc928",Reading:"#24a9e6",Math:"#35c48d"};
 const sportIcons={Phonics:"🏀",Sentences:"🏐",Reading:"🏃",Math:"⚽"};
-const mathBallImages={soccer:"assets/questions/ball-soccer-3d.png",baseball:"assets/questions/ball-baseball-3d.png",golf:"assets/questions/ball-golf-3d.png",tennis:"assets/questions/ball-tennis-3d.png"};
+const mathBallImages={soccer:"assets/questions/ball-soccer-3d.webp",baseball:"assets/questions/ball-baseball-3d.webp",golf:"assets/questions/ball-golf-3d.webp",tennis:"assets/questions/ball-tennis-3d.webp"};
 let current=0,answers=[],choiceOrders=[],student="Little Learner";
 let reportBlob=null,reportUrl="";
 let recordedChoiceAudio=null;
 let heardAudioChoices=new Set();
 let practiceTimer=null,practiceAudio=null;
 let lastScore=0,dressupApplied=0,dressupInitialized=false,dressupClipTimer=null,dressupCompletedLevel=0;
-const dressupStages=["boy-g.png","boy-g-colorful-hat.png","boy-g-blue-shirt-hat-star-sunglasses.png","boy-g-fun-outfit-hat-blue-star-sunglasses.png","boy-g-colorful-trophy.png"];
+const dressupStages=["boy-g.webp","boy-g-colorful-hat.webp","boy-g-blue-shirt-hat-star-sunglasses.webp","boy-g-fun-outfit-hat-blue-star-sunglasses.webp","boy-g-colorful-trophy.webp"];
 const dressupNames=["hat","sunglasses","clothes","trophy"];
 const dressupClips=["hat.mp4","hat-sunglasses.mp4","hat-sunglasses-clothes.mp4","hat-sunglasses-clothes-trophy.mp4"];
 const $=id=>document.getElementById(id);
@@ -164,6 +164,11 @@ function shuffleReadingQuestions(){
   questions.splice(10,4,...raceQuestions);
 }
 function start(){student=$("student-name").value.trim()||"Little Learner";current=0;answers=[];shuffleReadingQuestions();refreshRandomDistractors();choiceOrders=makeChoiceOrders();showScreen("quiz");renderQuestion()}
+function preloadNextQuestion(){
+  const nextItem=questions[current+1];if(!nextItem)return;
+  const sources=[];if(nextItem.image)sources.push(nextItem.image);if(nextItem.pattern)nextItem.pattern.filter(Boolean).forEach(ball=>sources.push(mathBallImages[ball]));if(nextItem.choiceImages)nextItem.choiceImages.forEach(ball=>sources.push(mathBallImages[ball]));
+  [...new Set(sources)].forEach(src=>{const image=new Image();image.decoding="async";image.src=src});
+}
 function renderQuestion(){
   stopPractice();stopRecordedChoice();stopAnswerFx();
   const item=questions[current], pct=((current+1)/questions.length)*100;
@@ -199,6 +204,7 @@ function renderQuestion(){
     const behavior=window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth";
     document.querySelector(".question-card").scrollIntoView({behavior,block:"center"});
   });
+  preloadNextQuestion();
   setTimeout(speakQuestion,300);
 }
 function choose(index){
@@ -263,7 +269,7 @@ async function shareReport(){
 }
 function closeCapture(){$("capture-modal").hidden=true}
 function unlockedDressupCount(){return lastScore<=5?1:lastScore<=10?2:lastScore<=15?3:4}
-function resetRewardCard(){const image=document.querySelector(".dressup-gift");image.src="assets/images/kids-3d-present-box.png";image.alt="A colorful present box containing the athlete dress-up reward";image.classList.remove("character-reward");$("dressup-card").querySelector(".dressup-badge").textContent="NEW REWARD";$("dressup-card").querySelector(".dressup-title").textContent="Athlete Dress-Up";$("dressup-card").querySelector(".dressup-prompt").textContent="Tap to open the locker →"}
+function resetRewardCard(){const image=document.querySelector(".dressup-gift");image.src="assets/images/kids-3d-present-box.webp";image.alt="A colorful present box containing the athlete dress-up reward";image.classList.remove("character-reward");$("dressup-card").querySelector(".dressup-badge").textContent="NEW REWARD";$("dressup-card").querySelector(".dressup-title").textContent="Athlete Dress-Up";$("dressup-card").querySelector(".dressup-prompt").textContent="Tap to open the locker →"}
 function resetDressup(){
   if(dressupClipTimer){clearTimeout(dressupClipTimer);dressupClipTimer=null}dressupCompletedLevel=0;$("replay-clip").hidden=true;$("replay-clip").disabled=false;const video=$("dressup-celebration-video");video.pause();video.removeAttribute("src");video.load();video.hidden=true;resetRewardCard();dressupApplied=0;dressupInitialized=true;$("dressup-character").src="assets/dressup/"+dressupStages[0];$("dressup-character").alt="The athlete ready to be dressed";
   const unlocked=unlockedDressupCount(),labels=["the colorful hat","the hat and sunglasses","the hat, sunglasses, and clothes","all four champion items"];
