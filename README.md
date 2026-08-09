@@ -1,6 +1,6 @@
-# Little Champions Weekly Test
+# Report_A_M6_W1
 
-A playful, athlete-themed, mobile-friendly 20-question kindergarten quiz with four sections: Phonics, Literacy Key Sentences, Reading, and Math.
+Little GP Champions Level A, Month 6, Week 1 report project: a playful, athlete-themed, mobile-friendly 20-question kindergarten quiz with four sections—Phonics, Literacy Key Sentences, Reading, and Math.
 
 ## Use it
 

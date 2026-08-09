@@ -1,5 +1,5 @@
 const questions = [
-  {section:"Phonics",tag:"SOUND CHECK",icon:"🏀",q:"What is the sound of the letter M?",hint:"Listen carefully to the two sounds.",choices:["/mm/","/nn/"],spokenChoices:["mmm","nnn"],answer:0},
+  {section:"Phonics",tag:"SOUND CHECK",icon:"🏀",q:"What is the sound of the letter M?",hint:"Listen to each sound, then choose your answer.",choices:["Phoneme M","Phoneme N"],audioChoices:["assets/audio/phonics/phoneme-m.mp3","assets/audio/phonics/phoneme-n.mp3"],answer:0},
   {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/milk.png",imageAlt:"A glass of milk",choices:["Milk","Meat"],answer:0},
   {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/mango.png",imageAlt:"A ripe mango",choices:["Mango","Milk"],answer:0},
   {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/meat.png",imageAlt:"A piece of meat",choices:["Meat","Mango"],answer:0},
@@ -26,6 +26,7 @@ const sportIcons={Phonics:"🏀",Sentences:"🏐",Reading:"🏃",Math:"⚽"};
 const mathBallImages={soccer:"assets/questions/ball-soccer-3d.png",baseball:"assets/questions/ball-baseball-3d.png",golf:"assets/questions/ball-golf-3d.png",tennis:"assets/questions/ball-tennis-3d.png"};
 let current=0,answers=[],choiceOrders=[],student="Little Learner";
 let reportBlob=null,reportUrl="";
+let recordedChoiceAudio=null;
 let lastScore=0,dressupApplied=0,dressupInitialized=false,dressupClipTimer=null,dressupCompletedLevel=0;
 const dressupStages=["boy-g.png","boy-g-colorful-hat.png","boy-g-blue-shirt-hat-star-sunglasses.png","boy-g-fun-outfit-hat-blue-star-sunglasses.png","boy-g-colorful-trophy.png"];
 const dressupNames=["hat","sunglasses","clothes","trophy"];
@@ -63,6 +64,14 @@ function speakOption(index,button){
   const message=new SpeechSynthesisUtterance((item.spokenChoices||item.choices)[index]);
   speakMessage(message,button);
 }
+function stopRecordedChoice(){if(recordedChoiceAudio){recordedChoiceAudio.pause();recordedChoiceAudio.currentTime=0;recordedChoiceAudio=null}document.querySelectorAll(".recorded-listen.speaking").forEach(button=>button.classList.remove("speaking"))}
+function playRecordedChoice(index,button){
+  stopRecordedChoice();if("speechSynthesis" in window)window.speechSynthesis.cancel();
+  const audio=new Audio(questions[current].audioChoices[index]);recordedChoiceAudio=audio;
+  button.classList.add("speaking");
+  const finish=()=>{if(recordedChoiceAudio!==audio)return;recordedChoiceAudio=null;button.classList.remove("speaking")};
+  audio.onended=finish;audio.onerror=finish;audio.play().catch(finish);
+}
 function speakMessage(message,button){
   const voices=window.speechSynthesis.getVoices();
   message.voice=voices.find(voice=>voice.lang.startsWith("en")&&/female|samantha|zira|aria|jenny/i.test(voice.name))||voices.find(voice=>voice.lang.startsWith("en"))||null;
@@ -95,6 +104,7 @@ function shuffleReadingQuestions(){
 }
 function start(){student=$("student-name").value.trim()||"Little Learner";current=0;answers=[];shuffleReadingQuestions();refreshRandomDistractors();choiceOrders=makeChoiceOrders();showScreen("quiz");renderQuestion()}
 function renderQuestion(){
+  stopRecordedChoice();
   const item=questions[current], pct=((current+1)/questions.length)*100;
   $("section-label").textContent=item.section;$("section-label").style.color=colors[item.section];
   $("progress-label").textContent=`${current+1} of ${questions.length}`;$("progress-bar").style.width=`${pct}%`;$("progress-bar").style.background=colors[item.section];
@@ -112,12 +122,22 @@ function renderQuestion(){
   const questionImage=$("question-image");
   questionImage.classList.toggle("wide",Boolean(item.imageWide));
   if(item.image){questionImage.src=item.image;questionImage.alt=item.imageAlt;questionImage.hidden=false}else{questionImage.hidden=true;questionImage.removeAttribute("src");questionImage.alt=""}
-  $("choices").innerHTML="";(choiceOrders[current]||[0,1]).forEach(index=>{const choice=item.choices[index],wrap=document.createElement("div"),answerButton=document.createElement("button"),listenButton=document.createElement("button");wrap.className="choice-wrap";answerButton.className="choice";answerButton.type="button";answerButton.dataset.choiceIndex=index;if(item.choiceImages){const image=document.createElement("img");image.className="choice-picture";image.src=mathBallImages[item.choiceImages[index]];image.alt=`3D ${choice}`;answerButton.appendChild(image);const label=document.createElement("span");label.textContent=choice;answerButton.appendChild(label)}else{answerButton.append(choice)}const small=document.createElement("small");small.textContent="Tap to choose";answerButton.appendChild(small);answerButton.addEventListener("click",()=>choose(index));listenButton.className="choice-listen";listenButton.type="button";listenButton.setAttribute("aria-label",`Listen to ${choice}`);listenButton.innerHTML='<span aria-hidden="true">🔊</span> Listen';listenButton.addEventListener("click",()=>speakOption(index,listenButton));wrap.append(answerButton,listenButton);$("choices").appendChild(wrap)});
+  $("choices").innerHTML="";(choiceOrders[current]||[0,1]).forEach((index,visualPosition)=>{
+    const choice=item.choices[index],wrap=document.createElement("div"),answerButton=document.createElement("button"),listenButton=document.createElement("button");
+    wrap.className="choice-wrap";answerButton.className="choice";answerButton.type="button";answerButton.dataset.choiceIndex=index;
+    if(item.audioChoices){
+      const soundLabel=`Sound ${visualPosition+1}`;answerButton.classList.add("sound-choice");answerButton.innerHTML=`${soundLabel}<small>Tap to choose</small>`;answerButton.setAttribute("aria-label",`Choose ${soundLabel}`);answerButton.addEventListener("click",()=>choose(index));listenButton.className="choice-listen recorded-listen";listenButton.type="button";listenButton.setAttribute("aria-label",`Listen to ${soundLabel}`);listenButton.innerHTML='<span aria-hidden="true">🔊</span> Listen';listenButton.addEventListener("click",()=>playRecordedChoice(index,listenButton));wrap.append(answerButton,listenButton);
+    }else{
+      if(item.choiceImages){const image=document.createElement("img");image.className="choice-picture";image.src=mathBallImages[item.choiceImages[index]];image.alt=`3D ${choice}`;answerButton.appendChild(image);const label=document.createElement("span");label.textContent=choice;answerButton.appendChild(label)}else{answerButton.append(choice)}
+      const small=document.createElement("small");small.textContent="Tap to choose";answerButton.appendChild(small);answerButton.addEventListener("click",()=>choose(index));listenButton.className="choice-listen";listenButton.type="button";listenButton.setAttribute("aria-label",`Listen to ${choice}`);listenButton.innerHTML='<span aria-hidden="true">🔊</span> Listen';listenButton.addEventListener("click",()=>speakOption(index,listenButton));wrap.append(answerButton,listenButton);
+    }
+    $("choices").appendChild(wrap);
+  });
   setTimeout(speakQuestion,300);
 }
 function choose(index){
   if(answers[current]!==undefined)return;const item=questions[current],correct=index===item.answer;answers[current]=index;
-  if("speechSynthesis" in window)window.speechSynthesis.cancel();
+  if("speechSynthesis" in window)window.speechSynthesis.cancel();stopRecordedChoice();
   playSound(correct?"correct":"wrong");
   const buttons=[...document.querySelectorAll(".choice")];buttons.forEach(b=>{const choiceIndex=Number(b.dataset.choiceIndex);b.disabled=true;if(choiceIndex===index)b.classList.add("selected",correct?"correct":"wrong");if(!correct&&choiceIndex===item.answer)b.classList.add("reveal")});
   $("feedback").textContent=correct?"Goal! That answer scores! 🏆":"Good try, athlete! The green answer is the one to practice. 💪";$("feedback").classList.add(correct?"good":"try");if(!correct)$("question-text").classList.add("shake");setTimeout(()=>$("question-text").classList.remove("shake"),350);
@@ -136,23 +156,23 @@ function showResults(){
   $("analysis-text").textContent=weakest[1]===5?`A perfect finish in every event! Keep training with stories, sounds, sentences, and number games.`:`${strongest[0]} was your strongest event. Next week, spend a few playful minutes training ${weakest[0].toLowerCase()} — every little practice makes you stronger.`;
   $("answer-review").innerHTML=questions.map((q,i)=>{const ok=answers[i]===q.answer;return `<div class="review-item"><span>${ok?"✅":"🌱"}</span><span><b>${i+1}. ${q.section}</b><br>${q.q}</span><span>${q.choices[answers[i]]}</span></div>`}).join("");
 }
-function restart(){if("speechSynthesis" in window)window.speechSynthesis.cancel();current=0;answers=[];showScreen("welcome");$("student-name").focus()}
+function restart(){if("speechSynthesis" in window)window.speechSynthesis.cancel();stopRecordedChoice();current=0;answers=[];showScreen("welcome");$("student-name").focus()}
 function reportFileName(){return `${student.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"student"}-weekly-report.png`}
 async function captureReport(){
   const button=$("capture-btn"),original=button.innerHTML;button.disabled=true;button.innerHTML="📸 Capturing…";
-  let exportStage;
+  const report=$("results");
   try{
-    exportStage=document.createElement("div");exportStage.className="capture-export-stage";
-    const exportReport=$("results").cloneNode(true);exportReport.id="capture-export-report";exportReport.classList.add("active","capture-export");
-    exportReport.querySelector(".result-actions")?.remove();exportReport.querySelector(".review-card")?.remove();
-    exportStage.appendChild(exportReport);document.body.appendChild(exportStage);
-    await Promise.all([...exportReport.querySelectorAll("img")].map(image=>image.complete?Promise.resolve():new Promise(resolve=>{image.onload=image.onerror=resolve})));
-    const canvas=await html2canvas(exportReport,{scale:2,useCORS:true,allowTaint:false,backgroundColor:"#fff9ef",logging:false,width:1120,windowWidth:1200,scrollX:0,scrollY:0});
+    if(typeof html2canvas!=="function")throw new Error("The report capture library did not load.");
+    report.classList.add("capture-export");document.body.classList.add("capturing-report");
+    if(document.fonts?.ready)await document.fonts.ready;
+    await Promise.all([...report.querySelectorAll("img")].map(image=>image.complete?Promise.resolve():new Promise(resolve=>{image.onload=image.onerror=resolve})));
+    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+    const canvas=await html2canvas(report,{scale:Math.min(2,window.devicePixelRatio||2),useCORS:true,allowTaint:false,backgroundColor:"#fff9ef",logging:false,scrollX:0,scrollY:-window.scrollY});
     reportBlob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png",.95));
     if(!reportBlob)throw new Error("The browser could not create the report image.");
     if(reportUrl)URL.revokeObjectURL(reportUrl);reportUrl=URL.createObjectURL(reportBlob);$("capture-image").src=reportUrl;$("share-note").textContent="Download it to this device or share it using an available app.";$("capture-modal").hidden=false;$("capture-close").focus();
   }catch(error){alert("The report picture could not be created. Please try again.")}
-  finally{exportStage?.remove();button.disabled=false;button.innerHTML=original}
+  finally{report.classList.remove("capture-export");document.body.classList.remove("capturing-report");button.disabled=false;button.innerHTML=original}
 }
 function downloadReport(){if(!reportBlob)return;const link=document.createElement("a");link.href=reportUrl;link.download=reportFileName();link.click();$("share-note").textContent="Your report picture has been downloaded!"}
 async function shareReport(){
@@ -187,7 +207,7 @@ function applyDressup(itemName){
   dressupApplied++;item.classList.add("applied");item.draggable=false;$("dressup-character").src="assets/dressup/"+dressupStages[dressupApplied];$("dressup-character").alt=`The athlete wearing ${dressupNames.slice(0,dressupApplied).join(", ")}`;
   const unlocked=unlockedDressupCount();if(dressupApplied===unlocked)completeDressup(unlocked);else{playSound("correct");$("dressup-status").textContent=`Great! Now add the ${dressupNames[dressupApplied]}.`}
 }
-$("home-logo").addEventListener("click",event=>{event.preventDefault();playSound("click");if($("welcome").classList.contains("active")||confirm("Go back to the start? Your answers will be cleared."))restart()});$("start-btn").addEventListener("click",start);$("student-name").addEventListener("keydown",e=>{if(e.key==="Enter")start()});$("next-btn").addEventListener("click",next);$("restart-btn").addEventListener("click",restart);$("quit-btn").addEventListener("click",()=>{if(confirm("Go back to the start? Your answers will be cleared."))restart()});$("print-btn").addEventListener("click",()=>window.print());
+$("home-logo").addEventListener("click",event=>{event.preventDefault();playSound("click");if($("welcome").classList.contains("active")||confirm("Go back to the start? Your answers will be cleared."))restart()});$("start-btn").addEventListener("click",start);$("student-name").addEventListener("keydown",e=>{if(e.key==="Enter")start()});$("next-btn").addEventListener("click",next);$("restart-btn").addEventListener("click",restart);$("quit-btn").addEventListener("click",()=>{if(confirm("Go back to the start? Your answers will be cleared."))restart()});
 $("question-listen-btn").addEventListener("click",speakQuestion);
 $("dressup-card").addEventListener("click",openDressup);$("dressup-close").addEventListener("click",closeDressup);$("dressup-reset").addEventListener("click",resetDressup);$("replay-clip").addEventListener("click",replayDressupClip);$("dressup-modal").addEventListener("click",event=>{if(event.target===$("dressup-modal"))closeDressup()});
 document.querySelectorAll(".dressup-item").forEach(item=>{item.addEventListener("click",()=>applyDressup(item.dataset.item));item.addEventListener("dragstart",event=>{if(item.classList.contains("locked")){event.preventDefault();return}event.dataTransfer.setData("text/plain",item.dataset.item);event.dataTransfer.effectAllowed="move"})});
