@@ -1,5 +1,5 @@
 const questions = [
-  {section:"Phonics",tag:"SOUND CHECK",icon:"🏀",q:"What is the sound of the letter M?",hint:"Listen to each sound, then choose your answer.",choices:["Phoneme M","Phoneme N"],audioChoices:["assets/audio/phonics/phoneme-m.mp3","assets/audio/phonics/phoneme-n.mp3"],practice:"The sound of M is",practiceDisplay:"The sound of M is /m/.",answer:0},
+  {section:"Phonics",tag:"SOUND CHECK",icon:"🏀",q:"What is the sound of the letter M?",hint:"Listen to Sound 1 and Sound 2. Then choose your answer.",choices:["Phoneme M","Phoneme N"],audioChoices:["assets/audio/phonics/phoneme-m.mp3","assets/audio/phonics/phoneme-n.mp3"],practice:"The sound of M is",practiceDisplay:"The sound of M is /m/.",answer:0},
   {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/milk.png",imageAlt:"A glass of milk",choices:["Milk","Meat"],practice:"The milk is here.",answer:0},
   {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/mango.png",imageAlt:"A ripe mango",choices:["Mango","Milk"],practice:"The mango is here.",answer:0},
   {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/meat.png",imageAlt:"A piece of meat",choices:["Meat","Mango"],practice:"The meat is here.",answer:0},
@@ -27,6 +27,7 @@ const mathBallImages={soccer:"assets/questions/ball-soccer-3d.png",baseball:"ass
 let current=0,answers=[],choiceOrders=[],student="Little Learner";
 let reportBlob=null,reportUrl="";
 let recordedChoiceAudio=null;
+let heardAudioChoices=new Set();
 let practiceTimer=null,practiceAudio=null;
 let lastScore=0,dressupApplied=0,dressupInitialized=false,dressupClipTimer=null,dressupCompletedLevel=0;
 const dressupStages=["boy-g.png","boy-g-colorful-hat.png","boy-g-blue-shirt-hat-star-sunglasses.png","boy-g-fun-outfit-hat-blue-star-sunglasses.png","boy-g-colorful-trophy.png"];
@@ -120,12 +121,17 @@ function playPractice(){
   }
   speakMessage(message);
 }
+function unlockSoundChoicesIfReady(){
+  if(heardAudioChoices.size<2)return;
+  document.querySelectorAll(".sound-choice").forEach(button=>{button.disabled=false;button.classList.remove("listening-locked");button.setAttribute("aria-label",`Choose ${button.dataset.soundLabel}`);const note=button.querySelector("small");if(note)note.textContent="Tap to choose"});
+  $("question-hint").textContent="Great listening! Now choose Sound 1 or Sound 2.";
+}
 function playRecordedChoice(index,button){
   stopRecordedChoice();if("speechSynthesis" in window)window.speechSynthesis.cancel();
   const audio=new Audio(questions[current].audioChoices[index]);recordedChoiceAudio=audio;
   button.classList.add("speaking");
-  const finish=()=>{if(recordedChoiceAudio!==audio)return;recordedChoiceAudio=null;button.classList.remove("speaking")};
-  audio.onended=finish;audio.onerror=finish;audio.play().catch(finish);
+  const finish=completed=>{if(recordedChoiceAudio!==audio)return;recordedChoiceAudio=null;button.classList.remove("speaking");if(completed){heardAudioChoices.add(index);button.classList.add("heard");button.innerHTML='<span aria-hidden="true">🔊</span> Listen again <b aria-label="Heard">✓</b>';unlockSoundChoicesIfReady()}};
+  audio.onended=()=>finish(true);audio.onerror=()=>finish(false);audio.play().catch(()=>finish(false));
 }
 function speakMessage(message,button){
   const voices=window.speechSynthesis.getVoices();
@@ -161,6 +167,7 @@ function start(){student=$("student-name").value.trim()||"Little Learner";curren
 function renderQuestion(){
   stopPractice();stopRecordedChoice();stopAnswerFx();
   const item=questions[current], pct=((current+1)/questions.length)*100;
+  heardAudioChoices=new Set();
   $("section-label").textContent=item.section;$("section-label").style.color=colors[item.section];
   $("progress-label").textContent=`${current+1} of ${questions.length}`;$("progress-bar").style.width=`${pct}%`;$("progress-bar").style.background=colors[item.section];
   $("question-paw").querySelector("span").textContent=current+1;$("mascot").textContent=sportIcons[item.section];$("question-tag").textContent=item.tag;
@@ -181,7 +188,7 @@ function renderQuestion(){
     const choice=item.choices[index],wrap=document.createElement("div"),answerButton=document.createElement("button"),listenButton=document.createElement("button");
     wrap.className="choice-wrap";answerButton.className="choice";answerButton.type="button";answerButton.dataset.choiceIndex=index;
     if(item.audioChoices){
-      const soundLabel=`Sound ${visualPosition+1}`;answerButton.classList.add("sound-choice");answerButton.innerHTML=`${soundLabel}<small>Tap to choose</small>`;answerButton.setAttribute("aria-label",`Choose ${soundLabel}`);answerButton.addEventListener("click",()=>choose(index));listenButton.className="choice-listen recorded-listen";listenButton.type="button";listenButton.setAttribute("aria-label",`Listen to ${soundLabel}`);listenButton.innerHTML='<span aria-hidden="true">🔊</span> Listen';listenButton.addEventListener("click",()=>playRecordedChoice(index,listenButton));wrap.append(answerButton,listenButton);
+      const soundLabel=`Sound ${visualPosition+1}`;answerButton.classList.add("sound-choice","listening-locked");answerButton.disabled=true;answerButton.dataset.soundLabel=soundLabel;answerButton.innerHTML=`${soundLabel}<small>🔒 Listen to both sounds first</small>`;answerButton.setAttribute("aria-label",`${soundLabel} is locked until both sounds are heard`);answerButton.addEventListener("click",()=>choose(index));listenButton.className="choice-listen recorded-listen";listenButton.type="button";listenButton.setAttribute("aria-label",`Listen to ${soundLabel}`);listenButton.innerHTML='<span aria-hidden="true">🔊</span> Listen';listenButton.addEventListener("click",()=>playRecordedChoice(index,listenButton));wrap.append(answerButton,listenButton);
     }else{
       if(item.choiceImages){const image=document.createElement("img");image.className="choice-picture";image.src=mathBallImages[item.choiceImages[index]];image.alt=`3D ${choice}`;answerButton.appendChild(image);const label=document.createElement("span");label.textContent=choice;answerButton.appendChild(label)}else{answerButton.append(choice)}
       const small=document.createElement("small");small.textContent="Tap to choose";answerButton.appendChild(small);answerButton.addEventListener("click",()=>choose(index));listenButton.className="choice-listen";listenButton.type="button";listenButton.setAttribute("aria-label",`Listen to ${choice}`);listenButton.innerHTML='<span aria-hidden="true">🔊</span> Listen';listenButton.addEventListener("click",()=>speakOption(index,listenButton));wrap.append(answerButton,listenButton);
