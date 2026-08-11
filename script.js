@@ -1,5 +1,5 @@
 const questions = [
-  {section:"Phonics",tag:"SOUND CHECK",icon:"🏀",q:"What is the sound of the letter M?",hint:"Listen to Sound 1 and Sound 2. Then choose your answer.",choices:["Phoneme M","Phoneme N"],audioChoices:["assets/audio/phonics/phoneme-m.mp3","assets/audio/phonics/phoneme-n.mp3"],practice:"The sound of M is",practiceDisplay:"The sound of M is /m/.",answer:0},
+  {section:"Phonics",tag:"SOUND CHECK",icon:"🏀",q:"What is the sound of the letter M?",hint:"Listen to a sound to unlock its answer button.",choices:["Phoneme M","Phoneme N"],audioChoices:["assets/audio/phonics/phoneme-m.mp3","assets/audio/phonics/phoneme-n.mp3"],practice:"The sound of M is",practiceDisplay:"The sound of M is /m/.",answer:0},
   {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/milk.webp",imageAlt:"A glass of milk",choices:["Milk","Meat"],practice:"The milk is here.",answer:0},
   {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/mango.webp",imageAlt:"A ripe mango",choices:["Mango","Milk"],practice:"The mango is here.",answer:0},
   {section:"Phonics",tag:"PICTURE WORD",icon:"🏀",q:"What is this?",hint:"Look at the picture and choose its name.",image:"assets/questions/meat.webp",imageAlt:"A piece of meat",choices:["Meat","Mango"],practice:"The meat is here.",answer:0},
@@ -13,7 +13,7 @@ const questions = [
   {section:"Reading",tag:"RACE READING",icon:"🚴",q:"Look at the picture! What is the correct sentence?",hint:"Follow the arrow to the cyclist.",image:"assets/questions/cycling-second.webp",imageAlt:"An arrow pointing to the cyclist in second place",imageWide:true,choices:["I am second.",""],distractors:["I am first.","I am third.","I am last."],answer:0},
   {section:"Reading",tag:"RACE READING",icon:"🚴",q:"Look at the picture! What is the correct sentence?",hint:"Follow the arrow to the cyclist.",image:"assets/questions/cycling-third.webp",imageAlt:"An arrow pointing to the cyclist in third place",imageWide:true,choices:["I am third.",""],distractors:["I am first.","I am second.","I am last."],answer:0},
   {section:"Reading",tag:"RACE READING",icon:"🚴",q:"Look at the picture! What is the correct sentence?",hint:"Follow the arrow to the cyclist.",image:"assets/questions/cycling-last.webp",imageAlt:"An arrow pointing to the cyclist in last place",imageWide:true,choices:["I am last.",""],distractors:["I am first.","I am second.","I am third."],answer:0},
-  {section:"Reading",tag:"BEST RESPONSE",icon:"🏆",q:"Find the best response to the question: Did you do well?",hint:"Choose the answer that matches the question.",choices:["Yes, I won.","I play many sports."],practice:"Did you do well? Yes, I won.",answer:0},
+  {section:"Reading",tag:"BEST RESPONSE",icon:"🏆",q:"Find the best response to the question:\nDid you do well?",hint:"Look at the pictures and choose the best answer.",image:"assets/questions/did-you-do-well.jpg",imageAlt:"Boy G happily crossing the finish line after doing well in a race",imageWide:true,imageCompact:true,choices:["Yes, I won.","I play many sports."],choiceImagePaths:["assets/questions/yes-i-won.jpg","assets/questions/many-sports-response.jpg"],choiceImageAlts:["Boy G holding a trophy on the winner's podium","Boy G playing with equipment from many different sports"],practice:"Did you do well? Yes, I won.",answer:0},
   {section:"Math",tag:"BIGGER NUMBER",icon:"🔢",q:"Which number is bigger?",hint:"Look at both numbers and choose the greater number.",numberPair:[2,5],choices:["5","2"],practice:"5 is bigger than 2.",answer:0},
   {section:"Math",tag:"BIGGER NUMBER",icon:"🔢",q:"Which number is bigger?",hint:"Look at both numbers and choose the greater number.",numberPair:[3,1],choices:["3","1"],practice:"3 is bigger than 1.",answer:0},
   {section:"Math",tag:"SPORTS PATTERN",icon:"⚽",q:"What comes next in the pattern?",hint:"Look for the repeating sports-ball pattern.",pattern:["soccer","baseball","soccer",null],choices:["Baseball","Soccer ball"],choiceImages:["baseball","soccer"],practice:"Soccer ball, baseball. It repeats. It's a pattern.",answer:0},
@@ -121,16 +121,18 @@ function playPractice(){
   }
   speakMessage(message);
 }
-function unlockSoundChoicesIfReady(){
-  if(heardAudioChoices.size<2)return;
-  document.querySelectorAll(".sound-choice").forEach(button=>{button.disabled=false;button.classList.remove("listening-locked");button.setAttribute("aria-label",`Choose ${button.dataset.soundLabel}`);const note=button.querySelector("small");if(note)note.textContent="Tap to choose"});
-  $("question-hint").textContent="Great listening! Now choose Sound 1 or Sound 2.";
+function unlockSoundChoice(index){
+  const answerButton=[...document.querySelectorAll(".sound-choice")].find(button=>Number(button.dataset.choiceIndex)===index);
+  if(!answerButton)return;
+  answerButton.disabled=false;answerButton.classList.remove("listening-locked");answerButton.setAttribute("aria-label",`Choose ${answerButton.dataset.soundLabel}`);
+  const note=answerButton.querySelector("small");if(note)note.textContent="Tap to choose";
+  $("question-hint").textContent=heardAudioChoices.size<2?`${answerButton.dataset.soundLabel} is ready! Listen to the other sound or choose this one.`:"Great listening! Both sounds are ready to choose.";
 }
 function playRecordedChoice(index,button){
   stopRecordedChoice();if("speechSynthesis" in window)window.speechSynthesis.cancel();
   const audio=new Audio(questions[current].audioChoices[index]);recordedChoiceAudio=audio;
   button.classList.add("speaking");
-  const finish=completed=>{if(recordedChoiceAudio!==audio)return;recordedChoiceAudio=null;button.classList.remove("speaking");if(completed){heardAudioChoices.add(index);button.classList.add("heard");button.innerHTML='<span aria-hidden="true">🔊</span> Listen again <b aria-label="Heard">✓</b>';unlockSoundChoicesIfReady()}};
+  const finish=completed=>{if(recordedChoiceAudio!==audio)return;recordedChoiceAudio=null;button.classList.remove("speaking");if(completed){heardAudioChoices.add(index);button.classList.add("heard");button.innerHTML='<span aria-hidden="true">🔊</span> Listen again <b aria-label="Heard">✓</b>';unlockSoundChoice(index)}};
   audio.onended=()=>finish(true);audio.onerror=()=>finish(false);audio.play().catch(()=>finish(false));
 }
 function speakMessage(message,button){
@@ -144,7 +146,12 @@ function speakMessage(message,button){
   }
   window.speechSynthesis.speak(message);
 }
-function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id===id));window.scrollTo({top:0,behavior:"smooth"})}
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id===id));
+  const weekPill=$("week-pill");
+  if(weekPill)weekPill.textContent=id==="week-select"?"📅 Month 7":"👟 Week 1";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
 function makeChoiceOrders(){
   const orders=[];
   for(let start=0;start<questions.length;start+=5){
@@ -166,7 +173,7 @@ function shuffleReadingQuestions(){
 function start(){student=$("student-name").value.trim()||"Little Learner";current=0;answers=[];shuffleReadingQuestions();refreshRandomDistractors();choiceOrders=makeChoiceOrders();showScreen("quiz");renderQuestion()}
 function preloadNextQuestion(){
   const nextItem=questions[current+1];if(!nextItem)return;
-  const sources=[];if(nextItem.image)sources.push(nextItem.image);if(nextItem.pattern)nextItem.pattern.filter(Boolean).forEach(ball=>sources.push(mathBallImages[ball]));if(nextItem.choiceImages)nextItem.choiceImages.forEach(ball=>sources.push(mathBallImages[ball]));
+  const sources=[];if(nextItem.image)sources.push(nextItem.image);if(nextItem.pattern)nextItem.pattern.filter(Boolean).forEach(ball=>sources.push(mathBallImages[ball]));if(nextItem.choiceImages)nextItem.choiceImages.forEach(ball=>sources.push(mathBallImages[ball]));if(nextItem.choiceImagePaths)sources.push(...nextItem.choiceImagePaths);
   [...new Set(sources)].forEach(src=>{const image=new Image();image.decoding="async";image.src=src});
 }
 function renderQuestion(){
@@ -188,14 +195,15 @@ function renderQuestion(){
   }else{questionVisual.className="question-visual"}
   const questionImage=$("question-image");
   questionImage.classList.toggle("wide",Boolean(item.imageWide));
+  questionImage.classList.toggle("compact",Boolean(item.imageCompact));
   if(item.image){questionImage.src=item.image;questionImage.alt=item.imageAlt;questionImage.hidden=false}else{questionImage.hidden=true;questionImage.removeAttribute("src");questionImage.alt=""}
   $("choices").innerHTML="";(choiceOrders[current]||[0,1]).forEach((index,visualPosition)=>{
     const choice=item.choices[index],wrap=document.createElement("div"),answerButton=document.createElement("button"),listenButton=document.createElement("button");
     wrap.className="choice-wrap";answerButton.className="choice";answerButton.type="button";answerButton.dataset.choiceIndex=index;
     if(item.audioChoices){
-      const soundLabel=`Sound ${visualPosition+1}`;answerButton.classList.add("sound-choice","listening-locked");answerButton.disabled=true;answerButton.dataset.soundLabel=soundLabel;answerButton.innerHTML=`${soundLabel}<small>🔒 Listen to both sounds first</small>`;answerButton.setAttribute("aria-label",`${soundLabel} is locked until both sounds are heard`);answerButton.addEventListener("click",()=>choose(index));listenButton.className="choice-listen recorded-listen";listenButton.type="button";listenButton.setAttribute("aria-label",`Listen to ${soundLabel}`);listenButton.innerHTML='<span aria-hidden="true">🔊</span> Listen';listenButton.addEventListener("click",()=>playRecordedChoice(index,listenButton));wrap.append(answerButton,listenButton);
+      const soundLabel=`Sound ${visualPosition+1}`;answerButton.classList.add("sound-choice","listening-locked");answerButton.disabled=true;answerButton.dataset.soundLabel=soundLabel;answerButton.innerHTML=`${soundLabel}<small>🔒 Listen to unlock</small>`;answerButton.setAttribute("aria-label",`${soundLabel} is locked until it is heard`);answerButton.addEventListener("click",()=>choose(index));listenButton.className="choice-listen recorded-listen";listenButton.type="button";listenButton.setAttribute("aria-label",`Listen to ${soundLabel}`);listenButton.innerHTML='<span aria-hidden="true">🔊</span> Listen';listenButton.addEventListener("click",()=>playRecordedChoice(index,listenButton));wrap.append(answerButton,listenButton);
     }else{
-      if(item.choiceImages){const image=document.createElement("img");image.className="choice-picture";image.src=mathBallImages[item.choiceImages[index]];image.alt=`3D ${choice}`;answerButton.appendChild(image);const label=document.createElement("span");label.textContent=choice;answerButton.appendChild(label)}else{answerButton.append(choice)}
+      if(item.choiceImages||item.choiceImagePaths){const image=document.createElement("img");image.className="choice-picture";image.src=item.choiceImagePaths?item.choiceImagePaths[index]:mathBallImages[item.choiceImages[index]];image.alt=item.choiceImageAlts?item.choiceImageAlts[index]:`3D ${choice}`;answerButton.appendChild(image);const label=document.createElement("span");label.textContent=choice;answerButton.appendChild(label)}else{answerButton.append(choice)}
       const small=document.createElement("small");small.textContent="Tap to choose";answerButton.appendChild(small);answerButton.addEventListener("click",()=>choose(index));listenButton.className="choice-listen";listenButton.type="button";listenButton.setAttribute("aria-label",`Listen to ${choice}`);listenButton.innerHTML='<span aria-hidden="true">🔊</span> Listen';listenButton.addEventListener("click",()=>speakOption(index,listenButton));wrap.append(answerButton,listenButton);
     }
     $("choices").appendChild(wrap);
@@ -231,6 +239,7 @@ function showResults(){
   $("answer-review").innerHTML=questions.map((q,i)=>{const ok=answers[i]===q.answer;return `<div class="review-item"><span>${ok?"✅":"🌱"}</span><span><b>${i+1}. ${q.section}</b><br>${q.q}</span><span>${q.choices[answers[i]]}</span></div>`}).join("");
 }
 function restart(){if("speechSynthesis" in window)window.speechSynthesis.cancel();stopPractice();stopRecordedChoice();stopAnswerFx();current=0;answers=[];showScreen("welcome");$("student-name").focus()}
+function returnToWeekSelection(){if("speechSynthesis" in window)window.speechSynthesis.cancel();stopPractice();stopRecordedChoice();stopAnswerFx();current=0;answers=[];showScreen("week-select")}
 function reportFileName(){return `${student.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"student"}-weekly-report.png`}
 async function captureReport(){
   const button=$("capture-btn"),original=button.innerHTML;button.disabled=true;button.innerHTML="📸 Capturing…";
@@ -294,7 +303,8 @@ function applyDressup(itemName){
   dressupApplied++;item.classList.add("applied");item.draggable=false;$("dressup-character").src="assets/dressup/"+dressupStages[dressupApplied];$("dressup-character").alt=`The athlete wearing ${dressupNames.slice(0,dressupApplied).join(", ")}`;
   const unlocked=unlockedDressupCount();if(dressupApplied===unlocked)completeDressup(unlocked);else{playSound("correct");$("dressup-status").textContent=`Great! Now add the ${dressupNames[dressupApplied]}.`}
 }
-$("home-logo").addEventListener("click",event=>{event.preventDefault();playSound("click");if($("welcome").classList.contains("active")||confirm("Go back to the start? Your answers will be cleared."))restart()});$("start-btn").addEventListener("click",start);$("student-name").addEventListener("keydown",e=>{if(e.key==="Enter")start()});$("next-btn").addEventListener("click",next);$("restart-btn").addEventListener("click",restart);$("quit-btn").addEventListener("click",()=>{if(confirm("Go back to the start? Your answers will be cleared."))restart()});$("practice-replay").addEventListener("click",playPractice);
+$("week-1-btn").addEventListener("click",()=>showScreen("welcome"));
+$("home-logo").addEventListener("click",event=>{event.preventDefault();playSound("click");if($("week-select").classList.contains("active"))return;if($("welcome").classList.contains("active")||confirm("Go back to the weekly selection? Your answers will be cleared."))returnToWeekSelection()});$("start-btn").addEventListener("click",start);$("student-name").addEventListener("keydown",e=>{if(e.key==="Enter")start()});$("next-btn").addEventListener("click",next);$("restart-btn").addEventListener("click",restart);$("quit-btn").addEventListener("click",()=>{if(confirm("Go back to the weekly selection? Your answers will be cleared."))returnToWeekSelection()});$("practice-replay").addEventListener("click",playPractice);
 $("question-listen-btn").addEventListener("click",speakQuestion);
 $("dressup-card").addEventListener("click",openDressup);$("dressup-close").addEventListener("click",closeDressup);$("dressup-reset").addEventListener("click",resetDressup);$("replay-clip").addEventListener("click",replayDressupClip);$("dressup-modal").addEventListener("click",event=>{if(event.target===$("dressup-modal"))closeDressup()});
 document.querySelectorAll(".dressup-item").forEach(item=>{item.addEventListener("click",()=>applyDressup(item.dataset.item));item.addEventListener("dragstart",event=>{if(item.classList.contains("locked")){event.preventDefault();return}event.dataTransfer.setData("text/plain",item.dataset.item);event.dataTransfer.effectAllowed="move"})});

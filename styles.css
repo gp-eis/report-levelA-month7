@@ -28,3 +28,39 @@ body .capture-export-stage{left:0;pointer-events:none}
 @media(max-width:760px){.brand{height:80px}.welcome-screen.active{grid-template-columns:1fr;padding-top:20px;gap:30px}.grooming-scene{min-height:400px;order:-1}.hero-copy{text-align:center}.hero-copy h1{font-size:46px}.hero-copy p{font-size:16px}.name-row{flex-direction:column}.lesson-chips{justify-content:center}.pet{font-size:120px}.tub{width:250px}.scene-tag{left:8px}.quiz-top{grid-template-columns:45px 1fr 58px;gap:9px}.question-card{border-radius:26px;padding-top:50px}.mini-mascot{left:10px;top:-35px}.choices{grid-template-columns:1fr;gap:12px}.choice{min-height:86px}.results-grid{grid-template-columns:1fr}.results-heading{flex-direction:column;text-align:center}.analysis-card{align-items:flex-start}.logo strong{font-size:19px}.week-pill{font-size:12px}}@media(max-width:420px){.app-shell{width:min(100% - 20px,1100px)}.grooming-scene{min-height:340px}.shower{right:20px}.pet{top:90px}.tub{top:220px;height:110px}.foam{top:200px}.tub span{margin-top:34px}.scene-tag{display:none}.quiz-screen.active{padding-top:5px}.paw-count{font-size:0}.paw-count span{font-size:13px}.result-actions{flex-direction:column}.score-card,.chart-card,.analysis-card{padding:24px}.skill-row{grid-template-columns:82px 1fr 30px;font-size:13px}}
 @page{size:A4 landscape;margin:10mm}
 @media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}html,body{width:100%;height:auto;background:linear-gradient(150deg,#fffaf0 0%,#fff4ee 48%,#eaf8ff 100%)!important;overflow:visible}.brand,.result-actions,.review-card,footer,.bubble-field{display:none!important}.app-shell{width:100%;max-width:none;margin:0}.results-screen,.results-screen.active{display:block!important;max-width:none;padding:0;margin:0}.celebration{display:block;font-size:20px;line-height:1;margin:0 0 2px}.results-heading{margin:0 0 12px;gap:15px}.results-heading h1{font-size:34px;margin:0}.results-heading .eyebrow{font-size:10px}.results-heading .student-report-name{font-size:14px;padding:3px 10px;margin-bottom:2px}.results-heading p{font-size:11px}.medal{width:66px;height:66px;font-size:38px;border-width:4px;box-shadow:0 5px 0 #ffd86d}.results-grid{grid-template-columns:.75fr 1.7fr;gap:14px;break-inside:avoid}.score-card,.chart-card,.analysis-card{box-shadow:none;border:2px solid #eadfd7;break-inside:avoid}.score-card,.chart-card{padding:18px}.score-ring{width:112px;height:112px;border-width:7px;padding-top:29px}.score-ring span{font-size:37px}.score-card h2{font-size:21px;margin-top:10px}.card-title h2,.analysis-card h2{font-size:19px}.card-title #percent-badge{padding:5px 9px;font-size:12px}.mini-label{font-size:9px}.skill-chart{margin-top:12px;gap:9px}.skill-row{grid-template-columns:90px 1fr 32px;gap:9px;font-size:12px}.bar-track{height:14px}.analysis-card{margin-top:14px;padding:16px 20px;gap:14px;background:linear-gradient(100deg,#fff9d9,#fff)!important}.analysis-icon{width:48px;height:48px;font-size:27px}.analysis-card p{font-size:11px;line-height:1.35}}
+
+/* Month 7 weekly challenge selection */
+.week-select-screen.active{display:block;min-height:calc(100vh - 154px);padding:34px 10px 70px}
+.week-select-heading{text-align:center;max-width:760px;margin:0 auto 30px}
+.week-select-kicker{display:inline-block;padding:7px 15px;border:3px solid #fff;border-radius:99px;background:var(--yellow-soft);color:#916900;box-shadow:0 5px 0 #f0d66e;font-size:12px;font-weight:900;letter-spacing:1.7px}
+.week-select-heading h1{margin:18px 0 10px;font:800 clamp(42px,6vw,68px)/.94 "Baloo 2";letter-spacing:-2px}
+.week-select-heading h1 em{color:var(--pink);font-style:normal;text-shadow:0 6px 0 #ffd7c7}
+.week-select-heading p{margin:0;color:var(--muted);font-size:18px;font-weight:800}
+.week-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;max-width:940px;margin:auto}
+.week-card{position:relative;min-height:230px;display:flex;align-items:flex-start;gap:16px;padding:25px;overflow:hidden;border:6px solid #fff;border-radius:34px;color:var(--ink);text-align:left;box-shadow:inset 0 -8px 12px rgba(23,52,90,.04),0 12px 0 #d6e8ed,0 24px 38px rgba(23,52,90,.13)}
+button.week-card{cursor:pointer}
+.week-card-ready{background:linear-gradient(145deg,#dff7ff 0 47%,#aee5f7 100%);transition:.2s transform,.2s box-shadow}
+.week-card-ready:hover{transform:translateY(-5px) rotate(-.5deg);box-shadow:inset 0 -8px 12px rgba(23,52,90,.04),0 17px 0 #92d7e9,0 30px 42px rgba(23,52,90,.16)}
+.week-card-ready:active{transform:translateY(6px);box-shadow:0 5px 0 #92d7e9}
+.week-number{position:relative;z-index:3;display:grid;place-items:center;flex:0 0 78px;width:78px;height:78px;border:5px solid #fff;border-radius:25px;background:linear-gradient(145deg,#ff9b6f,#ff6547);color:#fff;font:800 51px/1 "Baloo 2";text-shadow:0 4px 0 rgba(151,50,29,.2);box-shadow:inset 0 5px 8px rgba(255,255,255,.3),0 7px 0 #d94b36;transform:rotate(-4deg)}
+.week-card-copy{position:relative;z-index:3;display:flex;flex-direction:column;padding-top:7px}
+.week-card-copy small{color:var(--pink);font-size:11px;font-weight:900;letter-spacing:2px}
+.week-card-copy strong{font:800 26px/1.05 "Baloo 2"}
+.week-card-copy span{margin-top:7px;color:var(--muted);font-size:13px;font-weight:900}
+.week-card-arrow{position:absolute;z-index:4;right:23px;bottom:20px;display:grid;place-items:center;width:48px;height:48px;border:4px solid #fff;border-radius:50%;background:var(--pink);color:#fff;font-size:27px;font-weight:900;box-shadow:0 6px 0 #d94b36}
+.week-card-ready img{position:absolute;z-index:1;right:-20px;bottom:-36px;width:245px;height:165px;object-fit:cover;object-position:center 34%;border:5px solid rgba(255,255,255,.85);border-radius:50% 0 0 0;filter:saturate(1.08)}
+.ready-ribbon,.lock-pill{position:absolute;z-index:4;left:25px;bottom:20px;padding:8px 13px;border-radius:99px;background:var(--green);color:#fff;font-size:10px;font-weight:900;letter-spacing:1px;box-shadow:0 5px 0 #239a6d}
+.week-card-locked{background:linear-gradient(145deg,#fff,#f6f0eb);opacity:.88}
+.week-card-locked .week-number{background:linear-gradient(145deg,#aec1d1,#7f98ad);box-shadow:inset 0 5px 8px rgba(255,255,255,.3),0 7px 0 #687f93}
+.week-card-locked .week-sport{position:absolute;right:25px;bottom:17px;font-size:78px;filter:grayscale(.2);opacity:.42;transform:rotate(8deg)}
+.week-two{background:linear-gradient(145deg,#fff5c7,#fff)}
+.week-three{background:linear-gradient(145deg,#e6f8ff,#fff)}
+.week-four{background:linear-gradient(145deg,#e7fff3,#fff)}
+.lock-pill{left:auto;right:22px;top:20px;bottom:auto;background:#fff;color:#74869a;box-shadow:0 4px 0 #e2dad3}
+.week-select-footer{display:flex;justify-content:center;align-items:center;gap:10px;margin:31px auto 0;color:#61768c;font:900 14px "Nunito"}
+.week-select-footer span{font-size:20px}
+@media(max-width:760px){.week-select-screen.active{padding-top:24px}.week-grid{grid-template-columns:1fr;max-width:520px}.week-card{min-height:205px}.week-select-heading h1{font-size:47px}.week-select-heading p{font-size:15px}.week-card-ready img{width:225px;height:150px}}
+@media(max-width:440px){.week-select-heading h1{font-size:39px}.week-select-heading p{padding:0 16px}.week-card{min-height:180px;padding:18px;border-radius:27px}.week-number{width:63px;height:63px;flex-basis:63px;font-size:41px;border-radius:20px}.week-card-copy strong{font-size:21px}.week-card-ready img{right:-47px;bottom:-30px;width:205px;height:135px}.ready-ribbon{left:18px;bottom:15px}.week-card-arrow{right:16px;bottom:14px;width:42px;height:42px}.lock-pill{right:15px;top:14px}.week-card-locked .week-sport{right:18px;font-size:64px}}
+
+.question-card h2{white-space:pre-line}
+.question-image.wide.compact{width:min(480px,88%)}

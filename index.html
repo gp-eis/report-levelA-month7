@@ -20,10 +20,43 @@
         <span><strong>Little GP Champions</strong><small>Weekly Test</small></span>
       </a>
       <img class="school-logo" src="assets/images/gip-eis-logo.webp" alt="GIP EIS school logo" decoding="async" />
-      <div class="week-pill">👟 Week 1</div>
+      <div id="week-pill" class="week-pill">📅 Month 7</div>
     </header>
 
-    <section id="welcome" class="screen welcome-screen active" aria-labelledby="welcome-title">
+    <section id="week-select" class="screen week-select-screen active" aria-labelledby="week-select-title">
+      <div class="week-select-heading">
+        <span class="week-select-kicker">🏅 LITTLE GP CHAMPIONS</span>
+        <h1 id="week-select-title">Choose Your Weekly<br /><em>GP Challenge!</em></h1>
+        <p>Pick a week and show your GP Friends what you learned.</p>
+      </div>
+      <div class="week-grid" aria-label="Choose a weekly test">
+        <button id="week-1-btn" class="week-card week-card-ready" type="button" aria-label="Open the Week 1 weekly test">
+          <span class="week-number">1</span>
+          <span class="week-card-copy"><small>WEEK</small><strong>Ready to Go!</strong><span>20 GP challenges</span></span>
+          <span class="week-card-arrow" aria-hidden="true">→</span>
+          <img src="assets/images/gp-friends-cycling.webp" alt="" aria-hidden="true" decoding="async" />
+          <span class="ready-ribbon">PLAY WEEK 1</span>
+        </button>
+        <div class="week-card week-card-locked week-two" aria-label="Week 2 is coming soon">
+          <span class="week-number">2</span>
+          <span class="week-card-copy"><small>WEEK</small><strong>Next Challenge</strong><span>Coming soon</span></span>
+          <span class="week-sport" aria-hidden="true">⚽</span><span class="lock-pill">🔒 SOON</span>
+        </div>
+        <div class="week-card week-card-locked week-three" aria-label="Week 3 is coming soon">
+          <span class="week-number">3</span>
+          <span class="week-card-copy"><small>WEEK</small><strong>More to Learn</strong><span>Coming soon</span></span>
+          <span class="week-sport" aria-hidden="true">🎾</span><span class="lock-pill">🔒 SOON</span>
+        </div>
+        <div class="week-card week-card-locked week-four" aria-label="Week 4 is coming soon">
+          <span class="week-number">4</span>
+          <span class="week-card-copy"><small>WEEK</small><strong>Finish Strong</strong><span>Coming soon</span></span>
+          <span class="week-sport" aria-hidden="true">🏆</span><span class="lock-pill">🔒 SOON</span>
+        </div>
+      </div>
+      <div class="week-select-footer"><span>⭐</span> One fun challenge every week! <span>⭐</span></div>
+    </section>
+
+    <section id="welcome" class="screen welcome-screen" aria-labelledby="welcome-title">
       <div class="hero-copy">
         <h1 id="welcome-title">Ready for Your Weekly<br /><em>GP Challenge?</em></h1>
         <p>Show your GP Friends what you learned this week!</p>
