@@ -137,7 +137,8 @@ function playRecordedChoice(index,button){
 }
 function speakMessage(message,button){
   const voices=window.speechSynthesis.getVoices();
-  message.voice=voices.find(voice=>voice.lang.startsWith("en")&&/female|samantha|zira|aria|jenny/i.test(voice.name))||voices.find(voice=>voice.lang.startsWith("en"))||null;
+  const americanVoices=voices.filter(voice=>/^en[-_]US$/i.test(voice.lang)||/English.*United States|US English/i.test(voice.name));
+  message.voice=americanVoices.find(voice=>/female|samantha|zira|aria|jenny|ava|allison|joanna/i.test(voice.name))||americanVoices[0]||null;
   message.lang="en-US";message.rate=.82;message.pitch=1.12;message.volume=1;
   if(button){
     button.dataset.idleLabel=button.dataset.idleLabel||button.innerHTML;const original=button.dataset.idleLabel;
