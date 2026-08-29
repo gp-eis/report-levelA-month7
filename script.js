@@ -107,7 +107,7 @@ let practiceTimer=null,practiceAudio=null;
 let lastScore=0,dressupApplied=0,dressupInitialized=false,dressupClipTimer=null,dressupCompletedLevel=0;
 const dressupConfigs={
   1:{
-    cardTitle:"Athlete Dress-Up",modalTitle:"Champion Dress-Up!",characterAlt:"Boy G ready for his champion dress-up",
+    cardTitle:"Athlete Dress-Up",resultTitle:"My GP Champion Look",modalTitle:"Champion Dress-Up!",characterAlt:"Boy G ready for his champion dress-up",
     stages:["assets/dressup/boy-g.webp","assets/dressup/boy-g-colorful-hat.webp","assets/dressup/boy-g-blue-shirt-hat-star-sunglasses.webp","assets/dressup/boy-g-fun-outfit-hat-blue-star-sunglasses.webp","assets/dressup/boy-g-colorful-trophy.webp"],
     items:[
       {key:"hat",name:"hat",label:"Hat",image:"assets/dressup/boy-g-element-hat.webp",alt:"Colorful hat"},
@@ -119,7 +119,7 @@ const dressupConfigs={
     clips:["assets/videos/hat.mp4","assets/videos/hat-sunglasses.mp4","assets/videos/hat-sunglasses-clothes.mp4","assets/videos/hat-sunglasses-clothes-trophy.mp4"]
   },
   2:{
-    cardTitle:"Penny’s Practice Power",modalTitle:"Penny’s Practice Power!",characterAlt:"Penny ready for her soccer dress-up",
+    cardTitle:"Penny’s Practice Power",resultTitle:"My Practice Power Look",modalTitle:"Penny’s Practice Power!",characterAlt:"Penny ready for her soccer dress-up",
     stages:["assets/dressup/week-2/penny-base.webp","assets/dressup/week-2/penny-stage-1-v3.webp","assets/dressup/week-2/penny-stage-2-v3.webp","assets/dressup/week-2/penny-stage-3-v3.webp","assets/dressup/week-2/penny-stage-4-v4.webp"],
     items:[
       {key:"shoesSocks",name:"shoes and socks",label:"Shoes & Socks",image:"assets/dressup/week-2/item-shoes-socks-v3.webp",alt:"Rainbow striped socks and matching light-up soccer cleats"},
@@ -129,6 +129,30 @@ const dressupConfigs={
     ],
     unlockLabels:["the flashy shoes and socks","the shoes, socks, hair ties, and wristbands","the shoes, socks, accessories, and flashy clothes","Penny’s complete Practice Power look"],
     clips:["assets/videos/penny-shoes-socks.mp4","assets/videos/penny-hair-wrist.mp4","assets/videos/penny-clothes.mp4","assets/videos/penny-golden-ball.mp4"]
+  },
+  3:{
+    cardTitle:"Syd’s World Games Power",resultTitle:"My World Games Super Look",modalTitle:"World Games Super Syd!",characterAlt:"Syd ready for his World Games dress-up",
+    stages:["assets/dressup/week-3/syd-base.webp","assets/dressup/week-3/syd-stage-1.webp","assets/dressup/week-3/syd-stage-2.webp","assets/dressup/week-3/syd-stage-3.webp","assets/dressup/week-3/syd-stage-4.webp"],
+    items:[
+      {key:"starMedal",name:"GP Star Medal",label:"GP Star Medal",image:"assets/dressup/week-3/item-star-medal.webp",alt:"Iridescent GP Star Medal with a rainbow ribbon"},
+      {key:"championSkates",name:"light-up champion skates",label:"Light-Up Skates",image:"assets/dressup/week-3/item-light-up-skates.webp",alt:"Silver and teal ice skates with glowing rainbow blades"},
+      {key:"superstarOutfit",name:"multi-sport superstar outfit",label:"Superstar Outfit",image:"assets/dressup/week-3/item-superstar-outfit.webp",alt:"Teal purple and orange multi-sport champion outfit"},
+      {key:"victoryTorch",name:"Golden GP Victory Torch",label:"Victory Torch",image:"assets/dressup/week-3/item-victory-torch.webp",alt:"Jeweled golden torch with a magical rainbow flame"}
+    ],
+    unlockLabels:["the glowing GP Star Medal","the medal and light-up champion skates","the medal, skates, and multi-sport superstar outfit","Syd’s complete World Games Super look"],
+    clips:["assets/videos/syd-star-medal.mp4","assets/videos/syd-light-up-skates.mp4","assets/videos/syd-superstar-outfit.mp4","assets/videos/syd-victory-torch.mp4"]
+  },
+  4:{
+    cardTitle:"Ria’s World Explorer Power",resultTitle:"My World Games Explorer Look",modalTitle:"World Games Explorer Ria!",characterAlt:"Ria ready for her World Games explorer dress-up",
+    stages:["assets/dressup/week-4/ria-base.webp","assets/dressup/week-4/ria-stage-1.webp","assets/dressup/week-4/ria-stage-2.webp","assets/dressup/week-4/ria-stage-3.webp","assets/dressup/week-4/ria-stage-4.webp"],
+    items:[
+      {key:"explorerSash",name:"World Explorer Sash",label:"Explorer Sash",image:"assets/dressup/week-4/item-world-explorer-sash.webp",alt:"Sparkling purple and gold explorer sash with continent patches"},
+      {key:"flagsCape",name:"Parade of Flags Cape",label:"Flags Cape",image:"assets/dressup/week-4/item-parade-flags-cape.webp",alt:"Purple and teal cape decorated with international flag patches"},
+      {key:"worldGamesOutfit",name:"World Games Runner Outfit",label:"Runner Outfit",image:"assets/dressup/week-4/item-world-games-outfit.webp",alt:"Teal purple white and gold World Games runner outfit"},
+      {key:"globeBaton",name:"Golden Globe Baton",label:"Globe Baton",image:"assets/dressup/week-4/item-golden-globe-baton.webp",alt:"Jeweled golden baton topped with a glowing globe"}
+    ],
+    unlockLabels:["the sparkling World Explorer Sash","the sash and Parade of Flags Cape","the sash, cape, and World Games Runner Outfit","Ria’s complete World Games Explorer look"],
+    clips:["assets/videos/ria-world-explorer-sash.mp4","assets/videos/ria-parade-flags-cape.mp4","assets/videos/ria-world-games-outfit.mp4","assets/videos/ria-golden-globe-baton.mp4"]
   }
 };
 const $=id=>document.getElementById(id);
@@ -365,7 +389,7 @@ async function captureReport(){
     report.removeAttribute("id");report.classList.add("active","capture-export");report.style.display="block";
     stage.appendChild(report);document.body.appendChild(stage);
     if(document.fonts?.ready)await document.fonts.ready;
-    await Promise.all([...report.querySelectorAll("img")].map(image=>image.complete?Promise.resolve():new Promise(resolve=>{image.onload=image.onerror=resolve})));
+    await Promise.all([...report.querySelectorAll("img")].map(image=>{image.loading="eager";image.decoding="sync";if(image.complete&&image.naturalWidth)return Promise.resolve();return new Promise(resolve=>{const timeout=setTimeout(resolve,10000);image.onload=image.onerror=()=>{clearTimeout(timeout);resolve()}})}));
     await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
     const width=Math.ceil(report.scrollWidth),height=Math.ceil(report.scrollHeight);
     const maxPixels=16000000;
@@ -410,7 +434,7 @@ function closeDressup(){if(dressupClipTimer){clearTimeout(dressupClipTimer);dres
 function completeDressup(level){
   const config=currentDressupConfig(),character=$("dressup-character"),video=$("dressup-celebration-video"),rewardImage=document.querySelector(".dressup-gift");
   dressupCompletedLevel=level;$("replay-clip").hidden=true;
-  rewardImage.src=config.stages[level];rewardImage.alt=`${student}’s completed champion dress-up character`;rewardImage.classList.add("character-reward");$("dressup-card").querySelector(".dressup-badge").textContent="COMPLETE!";$("dressup-card").querySelector(".dressup-title").textContent=activeWeek===2?"My Practice Power Look":"My GP Champion Look";$("dressup-card").querySelector(".dressup-prompt").textContent="Tap to see it again →";
+  rewardImage.src=config.stages[level];rewardImage.alt=`${student}’s completed champion dress-up character`;rewardImage.classList.add("character-reward");$("dressup-card").querySelector(".dressup-badge").textContent="COMPLETE!";$("dressup-card").querySelector(".dressup-title").textContent=config.resultTitle||"My GP Champion Look";$("dressup-card").querySelector(".dressup-prompt").textContent="Tap to see it again →";
   video.hidden=true;$("dressup-status").textContent=level===4?"Champion look complete! You earned every item! 🏆":"Great look! Keep learning to unlock more next time! 🌟";
   const clip=config.clips[level-1];if(!clip){playSound("correct");return}
   video.src=clip;const showFinal=()=>{video.hidden=true;$("replay-clip").hidden=false;$("replay-clip").disabled=false};video.onended=showFinal;video.onerror=showFinal;
