@@ -37,27 +37,34 @@
           <img src="assets/images/gp-friends-cycling.webp" alt="" aria-hidden="true" decoding="async" />
           <span class="ready-ribbon">PLAY WEEK 1</span>
         </button>
-        <div class="week-card week-card-locked week-two" aria-label="Week 2 is coming soon">
+        <button id="week-2-btn" class="week-card week-card-ready week-two" type="button" aria-label="Open the Week 2 weekly test">
           <span class="week-number">2</span>
-          <span class="week-card-copy"><small>WEEK</small><strong>Next Challenge</strong><span>Coming soon</span></span>
-          <span class="week-sport" aria-hidden="true">⚽</span><span class="lock-pill">🔒 SOON</span>
-        </div>
-        <div class="week-card week-card-locked week-three" aria-label="Week 3 is coming soon">
+          <span class="week-card-copy"><small>WEEK</small><strong>Practice Power!</strong><span>20 GP challenges</span></span>
+          <span class="week-card-arrow" aria-hidden="true">→</span>
+          <img src="assets/images/week-2-practice-hero.webp" alt="" aria-hidden="true" decoding="async" />
+          <span class="ready-ribbon">PLAY WEEK 2</span>
+        </button>
+        <button id="week-3-btn" class="week-card week-card-ready week-three" type="button" aria-label="Open the Week 3 weekly test">
           <span class="week-number">3</span>
-          <span class="week-card-copy"><small>WEEK</small><strong>More to Learn</strong><span>Coming soon</span></span>
-          <span class="week-sport" aria-hidden="true">🎾</span><span class="lock-pill">🔒 SOON</span>
-        </div>
-        <div class="week-card week-card-locked week-four" aria-label="Week 4 is coming soon">
+          <span class="week-card-copy"><small>WEEK</small><strong>Olympic Energy!</strong><span>20 GP challenges</span></span>
+          <span class="week-card-arrow" aria-hidden="true">→</span>
+          <img src="assets/images/week-3-syd-hero.webp" alt="" aria-hidden="true" decoding="async" />
+          <span class="ready-ribbon">PLAY WEEK 3</span>
+        </button>
+        <button id="week-4-btn" class="week-card week-card-ready week-four" type="button" aria-label="Open the Week 4 weekly test">
           <span class="week-number">4</span>
-          <span class="week-card-copy"><small>WEEK</small><strong>Finish Strong</strong><span>Coming soon</span></span>
-          <span class="week-sport" aria-hidden="true">🏆</span><span class="lock-pill">🔒 SOON</span>
-        </div>
+          <span class="week-card-copy"><small>WEEK</small><strong>World Champions!</strong><span>20 GP challenges</span></span>
+          <span class="week-card-arrow" aria-hidden="true">→</span>
+          <img src="assets/images/week-4-ria-hero.webp" alt="" aria-hidden="true" decoding="async" />
+          <span class="ready-ribbon">PLAY WEEK 4</span>
+        </button>
       </div>
       <div class="week-select-footer"><span>⭐</span> One fun challenge every week! <span>⭐</span></div>
     </section>
 
     <section id="welcome" class="screen welcome-screen" aria-labelledby="welcome-title">
       <div class="hero-copy">
+        <button id="all-weeks-btn" class="all-weeks-btn" type="button"><span aria-hidden="true">←</span> All Weeks</button>
         <h1 id="welcome-title">Ready for Your Weekly<br /><em>GP Challenge?</em></h1>
         <p>Show your GP Friends what you learned this week!</p>
         <label class="name-label" for="student-name">Your name</label>
@@ -72,7 +79,7 @@
       </div>
       <div class="grooming-scene level-a-scene" aria-label="Boy G and Girl P welcome Level A learners">
         <div class="level-badge"><span>⭐</span><b>LEVEL A</b><small>GP Friends</small></div>
-        <img class="cycling-friends-hero" src="assets/images/gp-friends-cycling.webp" alt="Boy G and Girl P riding bicycles together toward the finish line" decoding="async" fetchpriority="high" />
+        <img id="week-hero-image" class="cycling-friends-hero" src="assets/images/gp-friends-cycling.webp" alt="Boy G and Girl P riding bicycles together toward the finish line" decoding="async" fetchpriority="high" />
         <div class="scene-sparkles" aria-hidden="true"><span>⭐</span><span>⚽</span><span>✦</span><span>🎾</span></div>
       </div>
     </section>
@@ -93,6 +100,7 @@
         <p id="question-hint" class="question-hint"></p>
         <div id="question-visual" class="question-visual" aria-hidden="true" hidden></div>
         <img id="question-image" class="question-image" alt="" hidden />
+        <strong id="question-image-label" class="question-image-label" hidden></strong>
         <button id="question-listen-btn" class="choice-listen question-listen" type="button" aria-label="Listen to the question again"><span aria-hidden="true">🔊</span> Hear the question</button>
         <div id="choices" class="choices"></div>
         <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
